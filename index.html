@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Tidy: a simple to-do list and notes app that saves to your browser.">
+  <title>Tidy: Tasks and Notes</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✅</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <header class="app-header">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <h1>Tidy</h1>
+      </div>
+      <button id="theme-toggle" class="icon-btn" type="button" aria-label="Switch to dark mode"></button>
+    </header>
+
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button class="tab" type="button" role="tab" id="tab-tasks" aria-controls="panel-tasks" aria-selected="true" data-view="tasks">
+        Tasks <span class="tab-count" id="tasks-badge"></span>
+      </button>
+      <button class="tab" type="button" role="tab" id="tab-notes" aria-controls="panel-notes" aria-selected="false" data-view="notes" tabindex="-1">
+        Notes <span class="tab-count" id="notes-badge"></span>
+      </button>
+    </nav>
+
+    <main>
+      <!-- TASKS -->
+      <section id="panel-tasks" role="tabpanel" aria-labelledby="tab-tasks">
+        <form id="task-form" class="composer" autocomplete="off" novalidate>
+          <label for="task-title" class="sr-only">New task</label>
+          <input id="task-title" class="composer-main" type="text" placeholder="What needs doing?" maxlength="120">
+          <div class="composer-row">
+            <label class="field">
+              <span class="field-label">Priority</span>
+              <select id="task-priority">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </label>
+            <label class="field">
+              <span class="field-label">Due date</span>
+              <input id="task-due" type="date">
+            </label>
+            <button type="submit" class="btn btn-primary">Add task</button>
+          </div>
+          <p class="form-error" id="task-error" role="alert" hidden></p>
+        </form>
+
+        <div class="toolbar">
+          <div class="filters" role="group" aria-label="Filter tasks">
+            <button type="button" class="chip" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="chip" data-filter="active" aria-pressed="false">Active</button>
+            <button type="button" class="chip" data-filter="completed" aria-pressed="false">Completed</button>
+          </div>
+          <p class="counter" id="task-counter" aria-live="polite"></p>
+        </div>
+
+        <ul id="task-list" class="sheet" aria-label="Tasks"></ul>
+        <div id="task-empty" class="empty" hidden></div>
+
+        <div class="list-footer">
+          <button type="button" id="clear-completed" class="btn btn-ghost" hidden>Clear completed</button>
+        </div>
+      </section>
+
+      <!-- NOTES -->
+      <section id="panel-notes" role="tabpanel" aria-labelledby="tab-notes" hidden>
+        <form id="note-form" class="composer" autocomplete="off" novalidate>
+          <label for="note-title" class="sr-only">Note title</label>
+          <input id="note-title" class="composer-main" type="text" placeholder="Note title (optional)" maxlength="80">
+          <label for="note-body" class="sr-only">Note</label>
+          <textarea id="note-body" rows="3" placeholder="Write it down before you forget" maxlength="2000"></textarea>
+          <div class="composer-row composer-row--end">
+            <button type="submit" class="btn btn-primary">Save note</button>
+          </div>
+          <p class="form-error" id="note-error" role="alert" hidden></p>
+        </form>
+
+        <label for="note-search" class="sr-only">Search notes</label>
+        <input id="note-search" class="search" type="search" placeholder="Search notes">
+
+        <ul id="note-list" class="notes-grid" aria-label="Notes"></ul>
+        <div id="note-empty" class="empty" hidden></div>
+      </section>
+    </main>
+
+    <footer class="app-footer">Your tasks and notes are saved in this browser only.</footer>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
